@@ -25,5 +25,6 @@ That's about it.
 A few things to note and some TODOs:
    - SOON - Trademark - See this link for clarification - http://www.wowwiki.com/Soon
    - TODO: Split up classes. As it stands they are too bloated with functions. One class does way more than it needs to.
+My Responsability Separation is not good at all.
    - TODO: The Recover Password does not work for now. I intend on using SwiftMail to do that. I never got around to setting up a proper SMTP.
 
