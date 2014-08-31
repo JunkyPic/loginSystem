@@ -9,6 +9,7 @@
 <?php
 include_once 'forms/header.php';
 session_start();
+
 /**
 * Used to test things. Delete this at will.
 */
