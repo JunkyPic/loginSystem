@@ -4,7 +4,8 @@
 */
 
 /**
-* TODO: Redesign this class. It's too bloated with functions and does waaay too many things for just one class!
+* TODO: Redesign this class. It's too bloated with functions 
+* and does waaay too many things for just one class!
 */
 class RecoverPassword
 {
