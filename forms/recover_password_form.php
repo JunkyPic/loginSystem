@@ -2,12 +2,12 @@
 <html>
 <!--Yes, yes, using tables is so last 10 years. HTML is not the purpose here. PHP is.-->
     <head>
-        <title> Please enter email address </title>
+        <title> Recover password </title>
 		<link href="css/style.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
 	<div id="header">
-        <h3>Login</h3>
+        <h3>Please enter email address</h3>
     </div>
 	<div id="wrap">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
