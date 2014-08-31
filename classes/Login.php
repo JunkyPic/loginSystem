@@ -11,9 +11,14 @@ class Login
     
     public function __construct(){
         session_start();
+		/**
+		* TODO: Add remember me cookie
+		* uncomment this when it's done
         if(isset($_POST['rememberMe'])){
             $_COOKIE['rememberMe'] = TRUE;
         }
+		*/
+		
         /**
 		* If a session exists
         * Just redirect user to logged_in page.
@@ -78,10 +83,10 @@ class Login
                     $_SESSION['username'] = $userVerify['login_username'];
                     header('Location: logged_in.php');
                 } else {
-                    echo '<p> The username or password do not match any registered users </p>';
+                    echo '<p> The username or password do not match any registered users.</p>';
                 }
         } else {
-            echo 'You must fill in all fields';
+            echo '<p> You must fill in all fields.</p>';
 		}
 			
 	}

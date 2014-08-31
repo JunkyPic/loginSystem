@@ -7,6 +7,7 @@ This README contains a lot more things than it should. I will SOON modify it.
 
 A simple (probably not so secure) Login Script
 
+THIS IS A TEST TEXT
 
 A few things to note and some TODOs:
    - SOON - Trademark - See this link for clarification - http://www.wowwiki.com/Soon
