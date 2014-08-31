@@ -50,7 +50,7 @@ class RecoverPassword
 				*/
                 if($doesEmailExist){
                     //echo $doesEmailExist['login_email'];
-                    echo 'The email exists. Currently the recover password email will not send due to not having a proper SMPT configured.';
+                    echo '<p>The email exists. Currently the recover password email will not send due to not having a proper SMPT configured.</p>';
 					/**
 					* TODO: Make this work. Configure SMTP server -> SwitfMail
                     * Swift Mailer is downloaded and configured now.
