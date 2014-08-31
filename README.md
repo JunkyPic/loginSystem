@@ -1,4 +1,4 @@
-loginSystem
+Login System
 ===========
 
 A simple PHP login system using Sessions
