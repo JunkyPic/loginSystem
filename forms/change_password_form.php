@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Change Password </title>
+        <title> Simple Login System </title>
     </head>
     <body>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">

@@ -24,7 +24,16 @@ p{
     padding: 10px;
     font-weight: normal;
 }
- 
+#header h2{
+    color: #FFFFF3;
+    padding: 10px;
+    font-weight: normal;
+}
+#header h1{
+    color: #FFFFF3;
+    padding: 10px;
+    font-weight: normal;
+}
  
 #wrap{
     background: #FFFFFF;

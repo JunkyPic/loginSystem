@@ -6,7 +6,7 @@
     </head>
     <body>
 	<div id="header">
-        <h3>Register</h3>
+        <?php include_once 'header.php';?>
     </div>
 	<div id="wrap">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
