@@ -30,7 +30,7 @@
 					<p><input type="submit" name="resetPassword" value="Change Password"/></p>
         </form>
 		<p><a href="index.php">Go to Index</a></p>
-		<p>You will be automatically logged out once the password is changed!</p>
+		<p>Once the password has been change you'll have to log in again!</p>
 	</div>
     </body>
 </html>
