@@ -17,12 +17,12 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
     echo '<p>Session is set and you are logged in.</p>';
     echo '<p>Session ID is ' . $_SESSION['id'] . '.</p>';
 	echo '<p><a href="index.php">Return to Index</a></p>';
-	echo '<p>Since you are logged in, the index will redirect to the previous page logged_in.php</p>';
+	echo '<p>Since you are logged in, the index will redirect to the page logged_in.php</p>';
 } else {
 	echo '<p>You are not logged in.</p>';
     echo '<p>Session does not exist.</p>';
 	echo '<p><a href="index.php">Return to Index</a></p>';
-	echo '<p>Since you are NOT logged in, the index will NOT redirect to the previous page logged_in.php</p>';
+	echo '<p>Since you are NOT logged in, the index will NOT redirect to the page logged_in.php</p>';
 }
 
 ?>

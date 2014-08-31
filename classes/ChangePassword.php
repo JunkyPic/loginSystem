@@ -78,6 +78,8 @@ class ChangePassword
         * with the new password
         */
         $this->insertPassword($passwordNew);
+		$_SESSION = array();
+		session_destroy();
     }
     
     private function insertPassword($passwordNew){
@@ -114,9 +116,9 @@ class ChangePassword
         $result = $sqlQuery->execute(array(':passwordNew' => $password,
                                            ':usernameId'  => $usernameId));
         if($result){
-            echo 'Succesfully changed the password';
+            echo '<p>Successfully changed the password</p>';
         } else {
-            echo 'An error occurred while changing the password';
+            echo '<p>An error occurred while changing the password</p>';
         }
 
     }

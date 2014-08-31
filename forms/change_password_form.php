@@ -1,30 +1,36 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
         <title> Simple Login System </title>
+		<link href="css/style.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
+	<div id="header">
+        <?php include_once 'header.php';?>
+    </div>
+	<div id="wrap">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <table>
-                <tr>
-                    <td>Current Password</td>
+                <tr> 
+                    <td align="right"><label for="username">Current Password</label></td>
                     <!-- the type of this is text for testing purposes. It should be password -->
                     <td><input type="text" name="passwordCurrent"/></td>
                 </tr>
                 <tr>
-                    <td>New Password</td>
+                    <td align="right"><label for="username">New Password</label></td>
                     <!-- the type of this is text for testing purposes. It should be password -->
                     <td><input type="text" name="passwordNew"/></td>
                 </tr>
                 <tr>
-                    <td>New Password Again</td>
+                    <td align="right"><label for="username">Repeat Password</label></td>
                     <!-- the type of this is text for testing purposes. It should be password -->
                     <td><input type="text" name="passwordNewAgain"/></td>
                 </tr>
-                <tr>
-                    <td><input type="submit" name="resetPassword" value="Reset Password"/>
-                </tr> 
             </table>
+					<p><input type="submit" name="resetPassword" value="Change Password"/></p>
         </form>
+		<p><a href="index.php">Go to Index</a></p>
+		<p>You will be automatically logged out once the password is changed!</p>
+	</div>
     </body>
 </html>

@@ -20,6 +20,7 @@ if(isset($_SESSION['id'])){
 	echo '<p>Welcome <strong>' . $_SESSION['username'] . '</strong>!</p>';
 	echo '<p>Your session ID is: ' . $_SESSION['id'];
 	include 'forms/log_out_form.php';
+	echo '<p><a href="change_password.php"> Change password.</a></p>';
 	echo '<p><a href="another_page.php"> Check if you are logged in.</a></p>';
 
 } else {

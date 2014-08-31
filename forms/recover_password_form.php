@@ -18,7 +18,7 @@
                 </tr>
 
             </table>
-            <p><a href="index.php">Login</a></p>
+            <p><a href="index.php">Return to Login</a></p>
         </form>
 	</div>
     </body>

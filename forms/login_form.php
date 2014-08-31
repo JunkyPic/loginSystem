@@ -12,11 +12,11 @@
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<table>
 				<tr>
-					<td align="right"><label for="username">Username:</label></td>
+					<td align="right"><label for="username">Username</label></td>
 					<td><input type="text" name="username" /></td>
 				</tr>
 				<tr>
-					<td align="right"><label for="password">Password:</label></td>
+					<td align="right"><label for="password">Password</label></td>
 					<td><input type="text" name="password" /></td>
 				</tr>
 			</table>

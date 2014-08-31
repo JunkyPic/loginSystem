@@ -31,7 +31,7 @@
 			<p><input type="submit" class="submit_button" value="Register" name="register"/></p>
         </form>
 
-        <p><a href="index.php">Login</a></p>
+        <p><a href="index.php">Return to Login</a></p>
 	</div>
     </body>
 </html>
