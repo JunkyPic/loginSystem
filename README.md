@@ -6,8 +6,7 @@ A simple PHP login system using Cookies and Sessions
 This README contains a lot more things than it should. I will SOON modify it.
 
 A simple (probably not so secure) Login Script
-
-
+test
 A few things to note and some TODOs:
    - SOON - Trademark - See this link for clarification - http://www.wowwiki.com/Soon
    - First run the files in the _installation folder!
