@@ -76,6 +76,7 @@ a:hover {
   text-align: center;
 }
 
+
 a[title]:hover:after {
   content: attr(title);
   padding: 4px 8px;
