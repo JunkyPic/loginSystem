@@ -1,17 +1,14 @@
 loginSystem
 ===========
 
-A simple PHP login system using Cookies and Sessions
+A simple PHP login system using Sessions
 
 This README contains a lot more things than it should. I will SOON modify it.
-
-A simple (probably not so secure) Login Script
-
-THIS IS A TEST TEXT
 
 A few things to note and some TODOs:
    - SOON - Trademark - See this link for clarification - http://www.wowwiki.com/Soon
    - First run the files in the _installation folder!
+	  - Modify the credentials in _installation/create_db.php to suit your own. Do the same with _installation/create_tables.php.
       - Run create_db.php then create_tables.php. A more user friendly interface will come. SOON.
    - Password hasing is set(for the moment) to sha1. I will use password_hash() once I upgrade to PHP 5.4.x. Currently using a lower version. SOON.
    - Some parts of the code are repetitive(not so great, I know) I will change that SOON.
