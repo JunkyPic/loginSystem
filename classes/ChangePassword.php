@@ -26,6 +26,13 @@ class ChangePassword
     }
 
     private function doResetPassword(){
+    
+        require_once 'PasswordHash.php';
+        $passwordHash = new PasswordHash();
+        
+        require_once 'ValidateData.php';
+        $validateData = new ValidateData();
+        
         /**
         * Here nothing "interesting"
         * happends. Just some checks to make sure the user entered the right
@@ -47,16 +54,16 @@ class ChangePassword
                 $errors[] = '<p>Passwords do not match.</p>';
             }   
             
-            /**
-            * See further down some notes about 
-            * this function
-            */
-            if( ! $this->isPasswordValid($passwordNew)){
-                $errors[] = '<p>The password must be between 5 and 40 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
-            }
-            
             if($passwordNew == $passwordCurrent){
                 $errors[] = '<p>Your new password cannot be the same as your old password.</p>';
+            } 
+            
+            /**
+            * Validate password
+            * Example of valid password: Thequickbrown200!
+            */
+            if($validateData->pregMatch('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{5,200}$/', $passwordNew)){
+                $errors[] = '<p>The password must be between 5 and 200 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
             }
 
         }
@@ -85,7 +92,8 @@ class ChangePassword
     private function insertPassword($passwordNew){
         /**
         * Go up one directory.
-        * Conncatenate this var with paths from certain files
+        * Conncatenate this var 
+        * with paths from certain files
         */
         $upOneDir = realpath(__DIR__ . '/..');
         
@@ -100,9 +108,9 @@ class ChangePassword
         require $upOneDir . '/password_compat/lib/password.php';
         
         /**
-        * NOTE: Hash strength is set to default(10)
+        * Hash the password
         */
-        $password = password_hash($passwordNew, PASSWORD_BCRYPT);
+        $password = $passwordHash->hashPassword($password);
         
         /**
         * The username ID is dependent on the Session id
@@ -121,17 +129,6 @@ class ChangePassword
             echo '<p>An error occurred while changing the password</p>';
         }
 
-    }
-
-    /**
-    * @bool regex match 
-    * The password requires at least one uppercase letter, at least one lower case letter
-    * at least one number and at least any of the following characters: ! @ # $
-    * Length must be between 5 and 40 characters long.
-	* Example of valid password: Thequickbrown200!
-    */
-    private function isPasswordValid($password){
-        return (preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{5,40}$/', trim($password)));
     }
 
 }

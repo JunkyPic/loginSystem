@@ -11,6 +11,7 @@ class Login
     
     public function __construct(){
         session_start();
+
 		/**
 		* TODO: Add remember me cookie
 		* uncomment this when it's done
@@ -37,21 +38,19 @@ class Login
     * log in with post data
     */
     private function doLogin(){
+
 		 if( ! empty($_POST['username']) &&
 			 ! empty($_POST['password'])){
 					
                 $username = ($_POST['username']);
                 $password = ($_POST['password']);
                 
+                require_once 'PasswordHash.php';
+                $passwordHash = new PasswordHash();
+                
                 require_once 'db/db_connect.php';
                 require_once 'db/db_tables.php';
-                
-                /**
-                * PHP Version 5.4.31 doesn't support password_hash()
-                * so an extension called password_compat is used
-                * Link to lib - https://github.com/ircmaxell/password_compat
-                */
-                require_once 'password_compat/lib/password.php';
+
                 
                 $sqlQuery = $dbPDO->prepare("SELECT $loginPassword 
                                             FROM $tableName 
@@ -59,9 +58,8 @@ class Login
                 $sqlQuery->execute(array(':username' => $username));
                 
                 $hash = $sqlQuery->fetch();
-                
-                $passwordVerify = password_verify($password, $hash['login_password']);
-                
+
+                $passwordVerify = $passwordHash->verifyPassword($password, $hash['login_password']);
                 /**
                 * Note that the variables used here
                 * come from the db_tables.php file

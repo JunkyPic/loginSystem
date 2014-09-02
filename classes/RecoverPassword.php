@@ -15,27 +15,19 @@ class RecoverPassword
         }
     }
     
-    /**
-    * @bool
-    * Note: This has some flaws
-    * For example using numbers in the name of the email MAY give back some false negatives
-    * For more details see this question: https://stackoverflow.com/questions/3722831/does-phps-filter-var-filter-validate-email-actually-work
-    */
-    private function isEmailValid($email){
-        if (filter_var(trim($email), FILTER_VALIDATE_EMAIL)){
-            return true;
-        }
-        return false;
-    }
-    
+
     private function doRecover(){
         if( ! empty($_POST['email'])){
-            if($this->isEmailValid($_POST['email'])){
+        
+            require_once 'ValidateData.php';
+            $validateData = new ValidateData();
+            
+            require_once 'db/db_connect.php';
+            require_once 'db/db_tables.php';
+                
+            if($validateData->validateEmail($_POST['email'])){
                 $email = $_POST['email'];
 
-                require_once 'db/db_connect.php';
-                require_once 'db/db_tables.php';
-                
                 /**
                 * Note that the variables used here
                 * come from the db_tables.php file

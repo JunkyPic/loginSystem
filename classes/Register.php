@@ -9,10 +9,6 @@
 class Register
 {
     private $errors = array();
-	
-    private $username = NULL;
-    
-    private $password = NULL;
     
     public function __construct(){
 	
@@ -23,36 +19,6 @@ class Register
         }
     }
     
-    /**
-    * @bool
-    */
-    private function isEmailValid($email){
-        if (filter_var(trim($email), FILTER_VALIDATE_EMAIL)){
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-    * @bool regex match
-    * The username must contain alphanumeric chars
-    * and must be between 5 and 20 chars long
-    * Example of valid username: thebrownfox
-    */
-    private function isUsernameValid($username){
-        return (preg_match('/^[a-z\d_]{5,20}$/i', trim($username)));
-    }
-    
-    /**
-    * @bool regex match 
-    * The password requires at least one uppercase latter, at least one lower case letter
-    * at least one number and at least any of the following characters: ! @ # $
-    * Length must be between 5 and 40 characters long.
-	* Example of valid password: Thequickbrown200!
-    */
-    private function isPasswordValid($password){
-        return (preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{5,40}$/', trim($password)));
-    }
     
     /**
     * Here we register the user
@@ -64,46 +30,53 @@ class Register
 		! empty($_POST['password']) &&
 		! empty($_POST['email'])	&&
 		! empty($_POST['passwordAgain'])){
+        
+            require_once 'PasswordHash.php';
+            $passwordHash = new PasswordHash();
+            
+            require_once 'ValidateData.php';
+            $validateData = new ValidateData();
 
-			/**
-			* @bool
-			*/
-			if($this->isUsernameValid($_POST['username'])){
+            /**
+            * @bool regex match
+            * The username must contain alphanumeric chars
+            * and must be between 5 and 20 chars long
+            * Example of valid username: thebrownfox
+            */
+			if($validateData->pregMatch('/^[a-z\d_]{5,20}$/i', $_POST['username'])){
 				$username = trim($_POST['username']);
 			} else {
 				$errors[] = '<p>The username must be between 5 and 20 characters long. And it can only contain numbers and letters!</p>';
 			}
-			
-			/**
-			* @bool
-			*/
-			if($this->isEmailValid($_POST['email'])){
-				$email = trim($_POST['email']);
-			} else {
-				$errors[] = '<p>Email is invalid</p>';
-			}
-			/**
-			* Check weather the password is valid
-			*/
-			if($this->isPasswordValid($_POST['password'])){
-				$password = trim($_POST['password']);
-				$passwordAgain = trim($_POST['passwordAgain']);
+            
+            /**
+            * Validate password
+            * Example of valid password: Thequickbrown200!
+            */
+			if($validateData->pregMatch('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{5,200}$/', $_POST['password'])){
+				$password       = trim($_POST['password']);
+				$passwordAgain  = trim($_POST['passwordAgain']);
 				
 				if($password != $passwordAgain){
 					$errors[] = '<p>The passwords do not match.<p>';
 				}
 				/**
-				* PHP Version 5.4.31 doesn't support password_hash()
-				* so I used an extension called password_compat
-				* Link to lib - https://github.com/ircmaxell/password_compat
-				*/
-				require 'password_compat/lib/password.php';
-				
-				$password = password_hash($password, PASSWORD_BCRYPT);
+                * Hash the password
+                */
+				$password = $passwordHash->hashPassword($password);
+                
 			} else {
-				$errors[] = '<p>The password must be between 5 and 40 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
+				$errors[] = '<p>The password must be at least 5 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
 			}
-			
+            
+			/**
+			* @bool check if email is valid
+			*/
+			if($validateData->validateEmail($_POST['email'])){
+				$email = trim($_POST['email']);
+			} else {
+				$errors[] = '<p>Email is invalid</p>';
+			}
 
 	} else {
 		$errors[] = '<p>Some fields are empty.</p>';
@@ -113,7 +86,7 @@ class Register
 	* Check if there are any errors so far.
 	* I can't check after the queries because if some fields
 	* are empty PHP would slap me with an error
-* Also this is bad coding, i need to split up this class
+    * Also this is bad coding, i need to split up this class
 	*/
 	if (!empty($errors)) {
 		foreach($errors as $error){

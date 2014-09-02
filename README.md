@@ -27,4 +27,4 @@ A few things to note and some TODOs:
    - TODO: Split up classes. As it stands they are too bloated with functions. One class does way more than it needs to.
 My Responsability Separation is not good at all.
    - TODO: The Recover Password does not work for now. I intend on using SwiftMail to do that. I never got around to setting up a proper SMTP.
-
+   - TODO: Implement a repository pattern(and probably other stuff) - tutorial [here](http://code.tutsplus.com/tutorials/the-repository-design-pattern--net-35804)
