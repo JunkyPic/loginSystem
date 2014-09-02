@@ -39,8 +39,8 @@ class Login
     */
     private function doLogin(){
 
-		 if( ! empty($_POST['username']) &&
-			 ! empty($_POST['password'])){
+		if( ! empty($_POST['username']) &&
+			! empty($_POST['password'])){
 					
                 $username = ($_POST['username']);
                 $password = ($_POST['password']);
@@ -48,29 +48,27 @@ class Login
                 require_once 'PasswordHash.php';
                 $passwordHash = new PasswordHash();
                 
-                require_once 'db/db_connect.php';
-                require_once 'db/db_tables.php';
-
+                require_once 'SqlQueries.php';
+                $sqlQueries = new SqlQueries();
                 
-                $sqlQuery = $dbPDO->prepare("SELECT $loginPassword 
-                                            FROM $tableName 
-                                            WHERE $loginUsername=:username");
-                $sqlQuery->execute(array(':username' => $username));
-                
-                $hash = $sqlQuery->fetch();
-
-                $passwordVerify = $passwordHash->verifyPassword($password, $hash['login_password']);
                 /**
-                * Note that the variables used here
-                * come from the db_tables.php file
-                * not from user input
+                * $hash is the password stored in the database
                 */
-                $sqlQuery = $dbPDO->prepare("SELECT $loginUsername, $loginId FROM $tableName WHERE $loginUsername=:username");
-                                             
-                $sqlQuery->execute(array(':username' => $username));
+                $hash           = $sqlQueries->selectPasswordForLogin($username);
                 
-                $userVerify = $sqlQuery->fetch();
+                /**
+                * verifies password based on the $hash
+                * and the password provided by the user
+                */
+                $passwordVerify = $passwordHash->verifyPassword($password, $hash['login_password']);
+                
+                /**
+                * Compares the username input by the user
+                * to the username stored in the database
+                */
+                $userVerify     = $sqlQueries->selectUsernameForLogin($username);
 
+                
                 if(($passwordVerify == 1) && ($userVerify['login_username'] == $username)){
 
                     /**
