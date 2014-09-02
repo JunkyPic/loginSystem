@@ -26,10 +26,7 @@ class ChangePassword
     }
 
     private function doResetPassword(){
-    
-        require_once 'PasswordHash.php';
-        $passwordHash = new PasswordHash();
-        
+
         require_once 'ValidateData.php';
         $validateData = new ValidateData();
         
@@ -62,7 +59,7 @@ class ChangePassword
             * Validate password
             * Example of valid password: Thequickbrown200!
             */
-            if($validateData->pregMatch('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{5,200}$/', $passwordNew)){
+            if( ! $validateData->pregMatch('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{5,200}$/', $passwordNew)){
                 $errors[] = '<p>The password must be between 5 and 200 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
             }
 
@@ -90,28 +87,15 @@ class ChangePassword
     }
     
     private function insertPassword($passwordNew){
-        /**
-        * Go up one directory.
-        * Conncatenate this var 
-        * with paths from certain files
-        */
-        $upOneDir = realpath(__DIR__ . '/..');
-        
-        require_once $upOneDir . '/db/db_connect.php';
-        require_once $upOneDir . '/db/db_tables.php';
-        
-        /**
-        * PHP Version 5.4.31 doesn't support password_hash()
-        * so I used an extension called password_compat
-        * Link to lib - https://github.com/ircmaxell/password_compat
-        */
-        require $upOneDir . '/password_compat/lib/password.php';
-        
+
         /**
         * Hash the password
         */
-        $password = $passwordHash->hashPassword($password);
+        require_once 'PasswordHash.php';
+        $passwordHash = new PasswordHash();
         
+        $password = $passwordHash->hashPassword($passwordNew);
+
         /**
         * The username ID is dependent on the Session id
         * which is set to the username ID - in the database
@@ -120,9 +104,10 @@ class ChangePassword
         */
         $usernameId = $_SESSION['id'];
         
-        $sqlQuery = $dbPDO->prepare("UPDATE $tableName SET $loginPassword=:passwordNew WHERE $loginId=:usernameId");
-        $result = $sqlQuery->execute(array(':passwordNew' => $password,
-                                           ':usernameId'  => $usernameId));
+        require_once 'SqlQueries.php';
+        $sqlQueries = new SqlQueries();
+                
+        $result = $sqlQueries->updateChangeForPassword($password, $usernameId);
         if($result){
             echo '<p>Successfully changed the password</p>';
         } else {
