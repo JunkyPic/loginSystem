@@ -32,44 +32,56 @@ class SqlQueries
     
     public function selectPasswordForLogin($username){
         $sqlQuery = $this->dbPDO->prepare("SELECT $this->loginPassword 
-                                    FROM $this->tableName 
-                                    WHERE $this->loginUsername=:username");
+                                          FROM $this->tableName 
+                                          WHERE $this->loginUsername=:username LIMIT 1");
         $sqlQuery->execute(array(':username' => $username));
         return $sqlQuery->fetch();
     }
     
     public function selectUsernameForLogin($username){
         $sqlQuery = $this->dbPDO->prepare("SELECT $this->loginUsername, $this->loginId  
-                                    FROM $this->tableName 
-                                    WHERE $this->loginUsername=:username");
+                                          FROM $this->tableName 
+                                          WHERE $this->loginUsername=:username LIMIT 1");
                                      
         $sqlQuery->execute(array(':username' => $username));
         return $sqlQuery->fetch();
     }
     
     public function updateChangeForPassword($password, $usernameId){
-        $sqlQuery = $this->dbPDO->prepare("UPDATE $this->tableName SET $this->loginPassword=:passwordNew WHERE $this->loginId=:usernameId");
+        $sqlQuery = $this->dbPDO->prepare("UPDATE $this->tableName 
+                                          SET $this->loginPassword=:passwordNew 
+                                          WHERE $this->loginId=:usernameId");
         return $sqlQuery->execute(array(':passwordNew' => $password,
                                         ':usernameId'  => $usernameId));
     }
     
     public function selectLoginEmailForRecoverPassword($email){
-        $sqlQuery = $this->dbPDO->prepare("SELECT $this->loginEmail FROM $this->tableName WHERE $this->loginEmail= :email");
+        $sqlQuery = $this->dbPDO->prepare("SELECT $this->loginEmail 
+                                           FROM $this->tableName 
+                                           WHERE $this->loginEmail= :email LIMIT 1");
         $sqlQuery->execute(array(':email' => $email));
         
         return $sqlQuery->fetch(PDO::FETCH_ASSOC);
     }
     
     public function selectEmailUsernameForRegister($username, $email){
-        $sqlQuery = $this->dbPDO->prepare("SELECT $this->loginUsername FROM $this->tableName WHERE $this->loginUsername=:username OR $this->loginEmail=:email");
+        $sqlQuery = $this->dbPDO->prepare("SELECT $this->loginUsername 
+                                           FROM $this->tableName 
+                                           WHERE $this->loginUsername=:username 
+                                           OR $this->loginEmail=:email LIMIT 1");
         $sqlQuery->execute(array(':username' => $username,
                                  ':email'    => $email));
         return $sqlQuery->fetch(PDO::FETCH_ASSOC);
     }
     
     public function insertUsernameEmailPassForRegister($username, $email, $password){
-        $sqlQuery = $this->dbPDO->prepare("INSERT INTO $this->tableName($this->loginUsername, $this->loginPassword, $this->loginEmail)
-                                     VALUES (:username, :password, :email)");
+        $sqlQuery = $this->dbPDO->prepare("INSERT INTO $this->tableName
+                                                      ($this->loginUsername, 
+                                                       $this->loginPassword, 
+                                                       $this->loginEmail)
+                                           VALUES (:username, 
+                                                  :password, 
+                                                  :email)");
         return $sqlQuery->execute(array(':username' => $username,
                                         ':password' => $password,
                                         ':email'    => $email));
