@@ -12,17 +12,17 @@
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <table>
                 <tr> 
-                    <td align="right"><label for="username">Current Password</label></td>
+                    <td align="right"><label for="CurrentPassword">Current Password</label></td>
                     <!-- the type of this is text for testing purposes. It should be password -->
                     <td><input type="text" name="passwordCurrent"/></td>
                 </tr>
                 <tr>
-                    <td align="right"><label for="username">New Password</label></td>
+                    <td align="right"><label for="NewPassword">New Password</label></td>
                     <!-- the type of this is text for testing purposes. It should be password -->
                     <td><input type="text" name="passwordNew"/></td>
                 </tr>
                 <tr>
-                    <td align="right"><label for="username">Repeat Password</label></td>
+                    <td align="right"><label for="RepeatPassword">Repeat Password</label></td>
                     <!-- the type of this is text for testing purposes. It should be password -->
                     <td><input type="text" name="passwordNewAgain"/></td>
                 </tr>
