@@ -95,7 +95,7 @@ class RecoverPassword
                     /**
                     * Create the message
                     */
-                    $swift->createMessage($newPassword, $email);
+                    $swift->createMessage($randomPassword, $email);
                     
                     /**
                     * Return the newly created message
