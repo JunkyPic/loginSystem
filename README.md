@@ -14,12 +14,15 @@ Requirements
 
 Installation
 ===========
- - Modifty the create_db.php file, located in the _installation folder, with your DB credentials and access.
- - Next comes the  create_tables.php file located in the same folder.
- -  OR simply create the tables yourself using SQL.
- -  A more user-friednly iterface to create the database and tables will come SOON.
+ - Access a MySql terminal. Copy+paste the stuff in create_db.php file and hit enter.
+ - Next comes the create_tables.php file located in the same folder.
+ -  A more user-friendly interface to create the database and tables will come SOON.
+ - Configure the ConnectionFactory.php, with your database credentials, located in the /db folder.
+ - Configure the SendMailRecoverPassword.php file with your SMTP credentials.
+ -  NOTE: If the files are not configured, the errors thrown are user friendly. Useful errors are logged in the logFiles folder.
+ - Change the date_default_timezone_set() in the WriteToLog.php, located in the classes folder, to your default time zone.
+ -  NOTE: This is more of an Optional thing. Currently the timezone is GMT +2. If you're ok with that, you can leave it as default. It won't affect the logging of errors at all.
 That's about it.
-
 ----
 
 A few things to note and some TODOs:

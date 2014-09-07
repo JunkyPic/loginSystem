@@ -37,7 +37,7 @@ class Login
     /**
     * log in with post data
     */
-    private function doLogin(){
+    public function doLogin(){
 
 		if( ! empty($_POST['username']) &&
 			! empty($_POST['password'])){
@@ -45,16 +45,25 @@ class Login
                 $username = ($_POST['username']);
                 $password = ($_POST['password']);
                 
+                /**
+                * Require the Password Hash file that
+                * handles the hashing of the password
+                */
                 require_once 'PasswordHash.php';
                 $passwordHash = new PasswordHash();
                 
-                require_once 'SqlQueries.php';
-                $sqlQueries = new SqlQueries();
-                
                 /**
                 * $hash is the password stored in the database
+                * Require the database class that handles the connection
                 */
-                $hash           = $sqlQueries->selectPasswordForLogin($username);
+                require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
+                $ConnectionFactory = new ConnectionFactory();
+                
+                $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_password
+                                                                      FROM login_table
+                                                                      WHERE login_username=:username LIMIT 1");
+                $sqlQuery->execute(array(':username' => $username));
+                $hash = $sqlQuery->fetch();
                 
                 /**
                 * verifies password based on the $hash
@@ -66,9 +75,14 @@ class Login
                 * Compares the username input by the user
                 * to the username stored in the database
                 */
-                $userVerify     = $sqlQueries->selectUsernameForLogin($username);
-
+                $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_username, login_id
+                                                                      FROM login_table
+                                                                      WHERE login_username=:username LIMIT 1");
+                                     
+                $sqlQuery->execute(array(':username' => $username));
                 
+                $userVerify = $sqlQuery->fetch();
+
                 if(($passwordVerify == 1) && ($userVerify['login_username'] == $username)){
 
                     /**

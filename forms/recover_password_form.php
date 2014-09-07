@@ -2,12 +2,12 @@
 <html>
     <head>
         <title> Recover password </title>
-		<link href="css/style.css" type="text/css" rel="stylesheet" />
+        <meta charset="utf-8"/>
     </head>
     <body>
-	<div id="header">
+    
 	<?php include_once 'header.php';?>
-    </div>
+    
 	<div id="wrap">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<p>Enter email address for your account.</p>

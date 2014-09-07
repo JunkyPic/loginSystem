@@ -15,8 +15,7 @@ class RecoverPassword
         }
     }
     
-
-    private function doRecover(){
+    public function doRecover(){
         if( ! empty($_POST['email'])){
         
             require_once 'ValidateData.php';
@@ -25,24 +24,90 @@ class RecoverPassword
             if($validateData->validateEmail($_POST['email'])){
                 $email = $_POST['email'];
 
-                require_once 'SqlQueries.php';
-                $sqlQueries = new SqlQueries();
+                /**
+                * Require the database class that handles the connection
+                */
+                require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
+                $ConnectionFactory = new ConnectionFactory();
                 
-                $doesEmailExist = $sqlQueries->selectLoginEmailForRecoverPassword($email);
+                $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_email
+                                                                      FROM login_table
+                                                                      WHERE login_email=:email LIMIT 1");
+                $sqlQuery->execute(array(':email' => $email));
+                
+                $doesEmailExist = $sqlQuery->fetch(PDO::FETCH_ASSOC);
                 
                 /**
 				* Does the email exist?
 				*/
                 if($doesEmailExist){
-                    //echo $doesEmailExist['login_email'];
-                    echo '<p>The email exists. Currently the recover password email will not send due to not having a proper SMPT configured.</p>';
-					/**
-					* TODO: Make this work. Configure SMTP server -> SwitfMail
-                    * Swift Mailer is downloaded and configured now.
-                    * Uncomment this when I get a chance to test
-                    * require_once 'SendMailRecoverPassword.php';
-                    * $swift = new RecoverPasswordFunctions();
-					*/
+                    /**
+                    * Require and instantiate the class here
+                    * If a proper SMTP is not configured, the password
+                    * will not be changed and the page will die
+                    * with a user friendly error.
+                    * A more useful error can be found in the 
+                    * log fiels of swiftmailer
+                    * WARNING: The __construct() of the class is built
+                    * in such a way that it will throw the exception and die
+                    * after. Point is, don't move this further down the page
+                    * or the password WILL be changed but the email will NOT
+                    * be sent if the SMTP is not configured!
+                    */
+                    require_once 'SendMailRecoverPassword.php';
+                    $swift = new SendMailRecoverPassword();
+                    
+                    /**
+                    * Require the password hash file
+                    * Instantiate the class
+                    */
+                    require_once 'PasswordHash.php';
+                    $passwordHash = new PasswordHash();
+                    
+                    /*
+                    * Create a random string of letteres and numbesr
+                    * This will be the users new password
+                    */
+                    $randomPassword = str_shuffle('abcdefghijklmnopqrstqwxz0123456789ABCDEFGHIJKLMNOPQRSTWXZ');
+                    
+                    /**
+                    * Hash the random string
+                    */
+                    $newPassword = $passwordHash->hashPassword($randomPassword);
+
+                    /**
+                    * Require the connection factory
+                    * Instantiate the class
+                    */
+                    require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
+                    $ConnectionFactory = new ConnectionFactory();
+                    
+                    /**
+                    * Update the new hashed password
+                    * replacing the old password
+                    */
+                    $sqlQuery = $ConnectionFactory->getDbConn()->prepare("UPDATE login_table
+                                                                          SET login_password=:password
+                                                                          WHERE login_email=:email LIMIT 1");
+                    $sqlQuery->execute(array(':password' => $newPassword,
+                                             ':email'    => $email));
+                                             
+                    /**
+                    * Create the message
+                    */
+                    $swift->createMessage($newPassword, $email);
+                    
+                    /**
+                    * Return the newly created message
+                    */
+                    $message = $swift->getMessage();
+                    
+                    /**
+                    * Send the message
+                    */
+                    if($swift->sendMessage($message)){
+                        echo '<p>Check your inbox for the new password. Your old password will no longer work</p>';
+                    }
                     
                 } else {
                     echo '<p>Email doesn\'t exist!</p>';

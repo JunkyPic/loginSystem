@@ -1,0 +1,5 @@
+[07-09-2014 00:07:15]: Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
+[07-09-2014 00:07:55]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+
+[07-09-2014 00:08:16]: Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
+[07-09-2014 00:09:51]: Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 

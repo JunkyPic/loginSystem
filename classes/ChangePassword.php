@@ -104,10 +104,22 @@ class ChangePassword
         */
         $usernameId = $_SESSION['id'];
         
-        require_once 'SqlQueries.php';
-        $sqlQueries = new SqlQueries();
-                
-        $result = $sqlQueries->updateChangeForPassword($password, $usernameId);
+        /**
+        * Require the database class that handles the connection
+        */
+        require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
+        $ConnectionFactory = new ConnectionFactory();
+        
+        /**
+        * This right here is, potentially, a bad idea
+        */
+        $sqlQuery = $ConnectionFactory->getDbConn()->prepare("UPDATE login_table
+                                                             SET login_password=:passwordNew 
+                                                             WHERE login_id=:usernameId");
+                                          
+        $result = $sqlQuery->execute(array(':passwordNew' => $password,
+                                           ':usernameId'  => $usernameId));
+                                        
         if($result){
             echo '<p>Successfully changed the password</p>';
         } else {

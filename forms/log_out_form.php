@@ -2,7 +2,7 @@
 <html>
     <head>
         <title> Simple Login System </title>
-		<link href="css/style.css" type="text/css" rel="stylesheet" />
+        <meta charset="utf-8"/>
     </head>
     <body>
         <form action="logged_in.php" method="post">

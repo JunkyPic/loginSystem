@@ -8,8 +8,9 @@ body{
     font: 14px "Lucida Grande";
     color: #464646;
 }
- 
-p{	
+
+
+p{
 	text-align: center;
     margin: 10px 0px 10px 0px;
 }
@@ -43,10 +44,12 @@ p{
     padding: 10px;
     border: 1px solid #DFDFDF;
     text-align: center;
+    border-radius:20px;
 }
  
 #wrap h3{
     font: italic 22px Georgia;
+
 }
  
 form {
