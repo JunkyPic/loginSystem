@@ -16,6 +16,7 @@ Installation
 ===========
  - Access a MySql terminal. Copy+paste the stuff in create_db.php file and hit enter.
  - Next comes the create_tables.php file located in the same folder.
+ -  The default storage engine is set to InnoDB. Mostly for the sole reason that it supports Transactions. Feel free to modify it to your needs. The login system doesn't require transactions, but they're nice to have for the future.
  -  A more user-friendly interface to create the database and tables will come SOON.
  - Configure the ConnectionFactory.php, with your database credentials, located in the /db folder.
  - Configure the SendMailRecoverPassword.php file with your SMTP credentials.
