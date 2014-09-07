@@ -5,6 +5,8 @@
 *        - Set the $SMTPUsername
 *        - Set the $SMTPPassword
 *        - Set the $port
+* @Optional:
+*        - Modify the stuff in createMessage() function. They can be left as default. It won't affect the sending of the emails
 * See http://swiftmailer.org/docs/sending.html for furher information 
 * on how to set it up
 */
