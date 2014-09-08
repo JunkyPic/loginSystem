@@ -1,10 +1,10 @@
 <?php
 /**
-* This file requires a valid SMTP to function
+* This file requires a valid _SMTP to function
 * @Setup:
-*        - Set the $SMTPUsername
-*        - Set the $SMTPPassword
-*        - Set the $port
+*        - Set the $_SMTPUsername
+*        - Set the $_SMTPPassword
+*        - Set the $_port
 * @Optional:
 *        - Modify the stuff in createMessage() function. They can be left as default. It won't affect the sending of the emails
 * See http://swiftmailer.org/docs/sending.html for furher information 
@@ -13,27 +13,28 @@
 
 class SendMailRecoverPassword
 {
-    private $message;
+    private $_message;
 
-    private $transport;
-    private $SMTP;
-    private $port = 25;
-    private $SMTPUsername = 'USERNAME GOES HERE';
-    private $SMTPPassword = 'PASSWORD GOES HERE';
-    private $mailer;
+    private $_transport;
+    private $_SMTP;
+    private $_port = 25;
+    private $_SMTPUsername = 'USERNAME GOES HERE';
+    private $_SMTPPassword = 'PASSWORD GOES HERE';
+    private $_mailer;
     
     public function __construct(){
 
         /**
-        * Require files for swift mailer
+        * Require files for swift _mailer
         * Create new instance of require class
         */
-        require_once realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
+        //require_once realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
+        require_once  realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once 'WriteToLog.php';
        
-        $this->transport = Swift_SmtpTransport::newInstance($this->SMTP, $this->port);
-        $this->transport->setUsername($this->SMTPUsername);
-        $this->transport->setPassword($this->SMTPPassword);
+        $this->_transport = Swift_SmtpTransport::newInstance($this->_SMTP, $this->_port);
+        $this->_transport->setUsername($this->_SMTPUsername);
+        $this->_transport->setPassword($this->_SMTPPassword);
         
         /**
         * Check the trasport here if it doesn't work
@@ -43,31 +44,31 @@ class SendMailRecoverPassword
         
         /**
         * Creates a new instance of Swift_Message
-        * and assigns it to the $message variable
+        * and assigns it to the $_message variable
         */
-        $this->message = Swift_Message::newInstance();
+        $this->_message = Swift_Message::newInstance();
         
-        $this->mailer = Swift_Mailer::newInstance($this->transport);
+        $this->_mailer = Swift_Mailer::newInstance($this->_transport);
     }
     
     public function createMessage($newPassword, $email){
     
-        $this->message->setSubject('Password reset');
-        $this->message->setFrom(array('no-reply@domain.com'=> 'no-reply'));
-        $this->message->setTo(array($email => 'User'));
-        $this->message->setBody('Hello, You have requested a password reset. Your new password is: ' . $newPassword);
+        $this->_message->setSubject('Password reset');
+        $this->_message->setFrom(array('no-reply@domain.com'=> 'no-reply'));
+        $this->_message->setTo(array($email => 'User'));
+        $this->_message->setBody('Hello, You have requested a password reset. Your new password is: ' . $newPassword);
     
     }
     public function getMessage(){
-        return $this->message;
+        return $this->_message;
     }
     
     
     public function checkTransport(){
         try{
-            $this->transport->start();
+            $this->_transport->start();
         } catch (Swift_TransportException $e){
-            //User friendly message
+            //User friendly _message
             echo '<p>Unable to send recovery email.</p>';
             
             $error = 'Error: ' . $e->getMessage();
@@ -79,12 +80,12 @@ class SendMailRecoverPassword
         }
     }
     
-    public function sendMessage($message){
+    public function sendMessage($_message){
         try{
-            $this->mailer->send($message);
+            $this->_mailer->send($_message);
             }
         catch (Swift_TransportException $e){
-            //User friendly message
+            //User friendly _message
             echo '<p>Unable to send recovery email.</p>';
             
             $error = 'Error: ' . $e->getMessage();

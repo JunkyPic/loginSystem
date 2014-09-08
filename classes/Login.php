@@ -6,6 +6,7 @@
 /**
 * TODO: Redesign this class. It's too bloated with functions and does waaay too many things for just one class!
 */
+
 class Login
 {
     
@@ -56,15 +57,18 @@ class Login
                 * $hash is the password stored in the database
                 * Require the database class that handles the connection
                 */
-                require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
-                $ConnectionFactory = new ConnectionFactory();
+                require_once 'SqlQueryController.php';
+                $sqlQueryController = new SqlQueryController();
                 
-                $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_password
-                                                                      FROM login_table
-                                                                      WHERE login_username=:username LIMIT 1");
-                $sqlQuery->execute(array(':username' => $username));
-                $hash = $sqlQuery->fetch();
+                $query = "SELECT login_password 
+                              FROM login_table 
+                              WHERE login_username=:username 
+                              LIMIT 1";
+                              
+                $array = array(':username' => $username);
                 
+                $hash = $sqlQueryController->runQueryFetch($query, $array);
+
                 /**
                 * verifies password based on the $hash
                 * and the password provided by the user
@@ -75,13 +79,13 @@ class Login
                 * Compares the username input by the user
                 * to the username stored in the database
                 */
-                $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_username, login_id
-                                                                      FROM login_table
-                                                                      WHERE login_username=:username LIMIT 1");
+                $query = "SELECT login_username, login_id
+                          FROM login_table
+                          WHERE login_username=:username LIMIT 1";
                                      
-                $sqlQuery->execute(array(':username' => $username));
+                $array = array(':username' => $username);
                 
-                $userVerify = $sqlQuery->fetch();
+                $userVerify = $sqlQueryController->runQueryFetch($query, $array);
 
                 if(($passwordVerify == 1) && ($userVerify['login_username'] == $username)){
 
@@ -89,7 +93,7 @@ class Login
                     * Great, the user's logged in
                     * Time to set the session and redirect him
                     */
-                    $_SESSION['id'] = $userVerify['login_id'];
+                    $_SESSION['id']       = $userVerify['login_id'];
                     $_SESSION['username'] = $userVerify['login_username'];
                     header('Location: logged_in.php');
                 } else {

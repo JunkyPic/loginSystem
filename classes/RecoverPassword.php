@@ -27,15 +27,15 @@ class RecoverPassword
                 /**
                 * Require the database class that handles the connection
                 */
-                require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
-                $ConnectionFactory = new ConnectionFactory();
+                require_once 'SqlQueryController.php';
+                $sqlQueryController = new SqlQueryController();
                 
-                $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_email
-                                                                      FROM login_table
-                                                                      WHERE login_email=:email LIMIT 1");
-                $sqlQuery->execute(array(':email' => $email));
+                $query = "SELECT login_email
+                          FROM login_table
+                          WHERE login_email=:email LIMIT 1";
+                $array = array(':email' => $email);
                 
-                $doesEmailExist = $sqlQuery->fetch(PDO::FETCH_ASSOC);
+                $doesEmailExist = $sqlQueryController->runQueryFetchAssoc($query, $array);
                 
                 /**
 				* Does the email exist?
@@ -46,8 +46,7 @@ class RecoverPassword
                     * If a proper SMTP is not configured, the password
                     * will not be changed and the page will die
                     * with a user friendly error.
-                    * A more useful error can be found in the 
-                    * log fiels of swiftmailer
+                    * A more useful error can be found in the log fiels
                     * WARNING: The __construct() of the class is built
                     * in such a way that it will throw the exception and die
                     * after. Point is, don't move this further down the page
@@ -75,23 +74,19 @@ class RecoverPassword
                     */
                     $newPassword = $passwordHash->hashPassword($randomPassword);
 
-                    /**
-                    * Require the connection factory
-                    * Instantiate the class
-                    */
-                    require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
-                    $ConnectionFactory = new ConnectionFactory();
-                    
+
                     /**
                     * Update the new hashed password
                     * replacing the old password
                     */
-                    $sqlQuery = $ConnectionFactory->getDbConn()->prepare("UPDATE login_table
-                                                                          SET login_password=:password
-                                                                          WHERE login_email=:email LIMIT 1");
-                    $sqlQuery->execute(array(':password' => $newPassword,
-                                             ':email'    => $email));
-                                             
+                    $query = "UPDATE login_table
+                              SET login_password=:password
+                              WHERE login_email=:email LIMIT 1";
+                    $array = array(':password' => $newPassword,
+                                   ':email'    => $email);
+                                   
+                    $sqlQueryController->runQueryExecute($query, $array);
+                    
                     /**
                     * Create the message
                     */

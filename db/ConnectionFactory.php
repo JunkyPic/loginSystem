@@ -19,8 +19,9 @@ class ConnectionFactory{
         require_once realpath(dirname(__FILE__) . '/..') . '/classes/WriteToLog.php';
         
         if($this->dbPDO == NULL){
-            try {
-               $this->dbPDO = new PDO('mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName, $this->dbUser, $this->dbPass);
+            try{
+                $this->dbPDO = new PDO('mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName, $this->dbUser, $this->dbPass);
+
             }
              catch (PDOException $e) {
                 //User friendly message

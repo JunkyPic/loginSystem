@@ -8,7 +8,7 @@
 */
 class Register
 {
-    private $errors = array();
+    private $_errors = array();
     
     public function __construct(){
 	
@@ -46,7 +46,7 @@ class Register
                 if($validateData->pregMatch('/^[a-z\d_]{5,20}$/i', $_POST['username'])){
                     $username = trim($_POST['username']);
                 } else {
-                    $this->errors[] = '<p>The username must be between 5 and 20 characters long. And it can only contain numbers and letters!</p>';
+                    $this->_errors[] = '<p>The username must be between 5 and 20 characters long. And it can only contain numbers and letters!</p>';
                 }
                 
                 /**
@@ -58,7 +58,7 @@ class Register
                     $passwordAgain  = trim($_POST['passwordAgain']);
                     
                     if($password != $passwordAgain){
-                        $this->errors[] = '<p>The passwords do not match.<p>';
+                        $this->_errors[] = '<p>The passwords do not match.<p>';
                     }
                     /**
                     * Hash the password
@@ -66,7 +66,7 @@ class Register
                     $password = $passwordHash->hashPassword($password);
                     
                 } else {
-                    $this->errors[] = '<p>The password must be at least 5 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
+                    $this->_errors[] = '<p>The password must be at least 5 characters long, must contain at least one number, at least one letter and at least one non Alphanumeric character.</p>';
                 }
                 
                 /**
@@ -75,21 +75,21 @@ class Register
                 if($validateData->validateEmail($_POST['email'])){
                     $email = trim($_POST['email']);
                 } else {
-                    $this->errors[] = '<p>Email is invalid</p>';
+                    $this->_errors[] = '<p>Email is invalid</p>';
                 }
 
         } else {
-            $this->errors[] = '<p>Some fields are empty.</p>';
+            $this->_errors[] = '<p>Some fields are empty.</p>';
         }
         
         /**
-        * Check if there are any errors so far.
+        * Check if there are any _errors so far.
         * I can't check after the queries because if some fields
         * are empty PHP would slap me with an error
         * Also this is bad coding, i need to split up this class
         */
-        if (!empty($this->errors)) {
-            foreach($this->errors as $error){
+        if (!empty($this->_errors)) {
+            foreach($this->_errors as $error){
                 echo $error;
             }
             return;
@@ -104,20 +104,20 @@ class Register
         /**
         * Require the database class that handles the connection
         */
-        require_once realpath(dirname(__FILE__) . '/..') . '/db/ConnectionFactory.php';
-        $ConnectionFactory = new ConnectionFactory();
+        require_once 'SqlQueryController.php';
+        $sqlQueryController = new SqlQueryController();
         
-        $sqlQuery = $ConnectionFactory->getDbConn()->prepare("SELECT login_username
-                                                              FROM login_table 
-                                                              WHERE login_username=:username
-                                                              OR login_email=:email LIMIT 1");
-        $sqlQuery->execute(array(':username' => $username,
-                                 ':email'    => $email));
+        $query = "SELECT login_username
+                  FROM login_table 
+                  WHERE login_username=:username
+                  OR login_email=:email LIMIT 1";
+        $array = array(':username' => $username,
+                        ':email'   => $email);
                                  
-        $doesItExist = $sqlQuery->fetch(PDO::FETCH_ASSOC);
+        $doesItExist = $sqlQueryController->runQueryFetchAssoc($query, $array);
         
         if($doesItExist['login_username'] == $username || $doesItExist['login_email'] == $email){
-            $errors[] = '<p>That username/email is already registered!</p>';
+            $_errors[] = '<p>That username/email is already registered!</p>';
         }
         
         /**
@@ -125,8 +125,8 @@ class Register
         * I need to split up my code into several
         * classes, this class is doing too much
         */
-        if (!empty($this->errors)) {
-            foreach($this->errors as $error){
+        if (!empty($this->_errors)) {
+            foreach($this->_errors as $error){
                 echo $error;
             }
             return;
@@ -137,18 +137,18 @@ class Register
         * He passed all the checks and we can safely
         * insert him into the database
         */
-        $sqlQuery = $ConnectionFactory->getDbConn()->prepare("INSERT INTO login_table
-                                                                                    (login_username, 
-                                                                                     login_password, 
-                                                                                     login_email)
-                                                              VALUES (:username, 
-                                                                      :password, 
-                                                                      :email)");
-        $result = $sqlQuery->execute(array(':username' => $username,
-                                           ':password' => $password,
-                                           ':email'    => $email));
+         $query = "INSERT INTO login_table
+                                         (login_username, 
+                                          login_password, 
+                                          login_email)
+                   VALUES (:username, 
+                           :password, 
+                           :email)";
+        $array = array(':username' => $username,
+                       ':password' => $password,
+                       ':email'    => $email);
                                         
-        if($result){
+        if($sqlQueryController->runQueryExecute($query, $array)){
             echo '<p>Registration successful!</p>';
         } else {
             die('<p> There was an error in the registration process.</p>');
