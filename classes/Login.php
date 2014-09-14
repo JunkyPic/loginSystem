@@ -15,7 +15,7 @@ class Login
         session_start();
 		
         /**
-		* If a session exists
+	* If a session exists
         * Just redirect user to logged_in page.
         * Else, do login
 	    */
