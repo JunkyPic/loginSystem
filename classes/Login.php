@@ -11,15 +11,8 @@ class Login
 {
     
     public function __construct(){
-        session_start();
 
-		/**
-		* TODO: Add remember me cookie
-		* uncomment this when it's done
-        if(isset($_POST['rememberMe'])){
-            $_COOKIE['rememberMe'] = TRUE;
-        }
-		*/
+        session_start();
 		
         /**
 		* If a session exists
@@ -36,7 +29,7 @@ class Login
     }
     
     /**
-    * log in with post data
+    * Log in with post data
     */
     public function doLogin(){
 
@@ -61,9 +54,9 @@ class Login
                 $sqlQueryController = new SqlQueryController();
                 
                 $query = "SELECT login_password 
-                              FROM login_table 
-                              WHERE login_username=:username 
-                              LIMIT 1";
+                          FROM login_table 
+                          WHERE login_username=:username 
+                          LIMIT 1";
                               
                 $array = array(':username' => $username);
                 
