@@ -28,7 +28,6 @@ class SendMailRecoverPassword
         * Require files for swift _mailer
         * Create new instance of require class
         */
-        //require_once realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once  realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once 'WriteToLog.php';
        

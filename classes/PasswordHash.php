@@ -1,10 +1,7 @@
 <?php
-/**
-* 
-*/
 
-class PasswordHash
-{
+class PasswordHash{
+
     public function __construct(){
         /**
         * PHP Version 5.4.31 doesn't support password_hash()
