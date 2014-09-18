@@ -2,8 +2,6 @@
 /**
 * This file requires a valid _SMTP to function
 * @Setup:
-*        - Set the $_SMTPUsername
-*        - Set the $_SMTPPassword
 *        - Set the $_port
 * @Optional:
 *        - Modify the stuff in createMessage() function. They can be left as default. It won't affect the sending of the emails
@@ -16,24 +14,20 @@ class SendMailRecoverPassword
     private $_message;
 
     private $_transport;
-    private $_SMTP;
+    private $_SMTP = 'localhost';
     private $_port = 25;
-    private $_SMTPUsername = 'USERNAME GOES HERE';
-    private $_SMTPPassword = 'PASSWORD GOES HERE';
     private $_mailer;
     
     public function __construct(){
 
         /**
         * Require files for swift _mailer
-        * Create new instance of require class
+        * Create new instance of require class 
         */
         require_once  realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once 'WriteToLog.php';
        
         $this->_transport = Swift_SmtpTransport::newInstance($this->_SMTP, $this->_port);
-        $this->_transport->setUsername($this->_SMTPUsername);
-        $this->_transport->setPassword($this->_SMTPPassword);
         
         /**
         * Check the trasport here if it doesn't work
@@ -45,9 +39,9 @@ class SendMailRecoverPassword
         * Creates a new instance of Swift_Message
         * and assigns it to the $_message variable
         */
-        $this->_message = Swift_Message::newInstance();
-        
         $this->_mailer = Swift_Mailer::newInstance($this->_transport);
+        $this->_message = Swift_Message::newInstance();
+
     }
     
     public function createMessage($newPassword, $email){
@@ -55,7 +49,19 @@ class SendMailRecoverPassword
         $this->_message->setSubject('Password reset');
         $this->_message->setFrom(array('no-reply@domain.com'=> 'no-reply'));
         $this->_message->setTo(array($email => 'User'));
-        $this->_message->setBody('Hello, You have requested a password reset. Your new password is: ' . $newPassword);
+        $this->_message->setBody(
+"DO NOT REPLY, THIS IS AN AUTOMATED MESSAGE.
+
+Hello,
+You have requested a password reset. 
+Your new password is:
+
+$newPassword
+
+Please note that your old password will no longer work.
+
+It is highly recommended that you do not leave this password as your default password.
+");
     
     }
     public function getMessage(){
