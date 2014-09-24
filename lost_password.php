@@ -1,5 +1,5 @@
 <?php
-require 'forms/recover_password_form.php';
+require 'views/recover_password_form.php';
 require 'classes/RecoverPassword.php';
 
 /**

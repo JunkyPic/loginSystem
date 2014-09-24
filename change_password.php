@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_SESSION['id'])){
-	include 'forms/change_password_form.php';
+	include 'views/change_password_form.php';
 	require_once 'classes/ChangePassword.php';
 	$changePassword = new ChangePassword();
 } else {

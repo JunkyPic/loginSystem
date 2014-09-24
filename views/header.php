@@ -3,5 +3,5 @@
 <link href="css/style.css" type="text/css" rel="stylesheet" />
 
 <div id="header">
-    <h2>Simple Login System</h2>
+    Blog
 </div>

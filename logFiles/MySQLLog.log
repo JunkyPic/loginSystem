@@ -1,19 +1,2 @@
-[07-09-2014 00:07:15]: Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
-[07-09-2014 00:07:55]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[07-09-2014 00:08:16]: Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
-[07-09-2014 00:09:51]: Error: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
-[08-09-2014 01:36:15]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[08-09-2014 01:36:38]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[08-09-2014 01:44:17]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[08-09-2014 01:44:27]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[08-09-2014 01:45:32]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[08-09-2014 01:45:47]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[14-09-2014 22:32:33]: Error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
+[23-09-2014 20:34:14]: Error: SQLSTATE[HY000] [1045] Access denied for user 'rdonohue_stats'@'localhost' (using password: YES)
+[23-09-2014 20:40:17]: Error: SQLSTATE[HY000] [1045] Access denied for user 'db-user'@'localhost' (using password: YES)

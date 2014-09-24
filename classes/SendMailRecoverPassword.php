@@ -2,11 +2,12 @@
 /**
 * This file requires a valid _SMTP to function
 * @Setup:
+*        - Set the $_SMTPUsername
+*        - Set the $_SMTPPassword
 *        - Set the $_port
 * @Optional:
 *        - Modify the stuff in createMessage() function. They can be left as default. It won't affect the sending of the emails
-* See http://swiftmailer.org/docs/sending.html for furher information 
-* on how to set it up
+* See http://swiftmailer.org/docs/sending.html for furher information on how to set it up
 */
 
 class SendMailRecoverPassword
@@ -20,10 +21,6 @@ class SendMailRecoverPassword
     
     public function __construct(){
 
-        /**
-        * Require files for swift _mailer
-        * Create new instance of require class 
-        */
         require_once  realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once 'WriteToLog.php';
        
@@ -50,7 +47,7 @@ class SendMailRecoverPassword
         $this->_message->setFrom(array('no-reply@domain.com'=> 'no-reply'));
         $this->_message->setTo(array($email => 'User'));
         $this->_message->setBody(
-"DO NOT REPLY, THIS IS AN AUTOMATED MESSAGE.
+"DO NOT REPLY. THIS IS AN AUTOMATED MESSAGE.
 
 Hello,
 You have requested a password reset. 

@@ -1,17 +1,19 @@
 <?php
+session_start();
 /**
 * Author: Andrei Popa
-* link: https://github.com/JunkyPic/loginSystem
+* link: https://github.com/JunkyPic/loginSystem/tree/Test
 */
+require_once 'classes/Login.php';
+$login = new Login();
 
-if (version_compare(PHP_VERSION, '5.3.7', '<')) {
-      exit('Sorry, this script does not run on a PHP version smaller than 5.3.7 !');
-} else {
-      require_once 'classes/Login.php';
-      require_once 'forms/login_form.php';
-      /**
-      * The construct in the Login class takes care of everything
-      */
-      
-      $login = new Login();
+if ((isset($_SESSION['id'])) && (isset($_SESSION['username']))){
+    header('Location: logged_in.php');
+    die();
+}
+
+require_once 'views/login_form.php';
+
+if(version_compare(PHP_VERSION, '5.3.7', '<')) {
+    exit('Sorry, this script does not run on a PHP version smaller than 5.3.7 !');
 }

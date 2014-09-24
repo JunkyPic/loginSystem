@@ -7,7 +7,7 @@
     <body>
         
     <?php include_once 'header.php';?>
-     
+
 	<div id="wrap">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<table>
@@ -25,14 +25,7 @@
         <!--Remember me<input type="checkbox" name="rememberMe" value="rememberMe"/>-->
         <p><a href="register.php">Register</a></p>
         <p><a href="lost_password.php">Lost password?</a></p>
-		<p><a href="another_page.php">Are you logged in? - This is a link for the purpose of demonstration. If you were logged in, you'd be automatically redirected.</a></p>
+	
 	</div>
     </body>
-<script>
-$("input[type=submit]").click(function(){
-
-});
-
-
-</script>
 </html>

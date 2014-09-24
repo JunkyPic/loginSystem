@@ -22,8 +22,9 @@ class ValidateData{
     }
     
     /**
-    * @bool
-    * requires associative array
+    * Requires associative array
+    * If any value of the array is empty
+    * it will return true
     */
     public static function isEmpty($data){
         foreach($data as $value){
@@ -35,7 +36,6 @@ class ValidateData{
     }
     
     /**
-    * @param associative array
     * stripAllWhiteSpaces will remove ALL white spaces.
     * example: $stringBefore = ' this is an example';
     *          $stringAfter  = 'thisisanexample';

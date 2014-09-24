@@ -15,8 +15,8 @@ class MySqlSingleton{
     * 
     * Fill these in with database credentials
     */
-    private static $_dbHost = "127.0.0.1";
-    private static $_dbName = "login_system";
+    private static $_dbHost = "localhost";
+    private static $_dbName = "login_db";
     private static $_dbUser = "root";
     private static $_dbPass = "asadar";
     private static $_conn   = NULL;

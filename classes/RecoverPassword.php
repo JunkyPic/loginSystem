@@ -1,7 +1,4 @@
 <?php
-/**
-* Handles the password recovery
-*/
 
 class RecoverPassword{
 
@@ -13,12 +10,7 @@ class RecoverPassword{
         require_once 'SqlQueryController.php';
         
         if(isset($_POST['recoverPassword'])){
-            /**
-            * @param associative array
-            * stripAllWhiteSpaces will remove ALL white spaces.
-            * example: $stringBefore = ' this is an example';
-            *          $stringAfter  = 'thisisanexample';
-            */
+
             $credentials = ValidateData::stripAllWhiteSpaces(array('email' => $_POST['email']
                                                                    )
                                                             );
@@ -33,11 +25,11 @@ class RecoverPassword{
             $sqlQueryController = new SqlQueryController();
             
             $query = "SELECT login_email
-                      FROM login_table
+                      FROM users_table
                       WHERE login_email=:email LIMIT 1";
             $array = array(':email' => $credentials['email']);
             
-            $emailExist = $sqlQueryController->runQueryFetchAssoc($query, $array);
+            $emailExist = $sqlQueryController->executeQuery($query, $array, 'fetchAssoc');
             
             if($emailExist){
             
@@ -62,36 +54,20 @@ class RecoverPassword{
                 */
                 $randomPassword = str_shuffle('abcdefghijklmnopqrstqwxz0123456789ABCDEFGHIJKLMNOPQRSTWXZ');
                 
-                /**
-                * Hash the random string
-                */
                 $newPassword = $passwordHash->hashPassword($randomPassword);
 
-                /**
-                * Update the new hashed password
-                * replacing the old password
-                */
-                $query = "UPDATE login_table
+                $query = "UPDATE users_table
                           SET login_password=:password
                           WHERE login_email=:email LIMIT 1";
                 $array = array(':password' => $newPassword,
                                ':email'    => $credentials['email']);
                                
-                $sqlQueryController->runQueryExecute($query, $array);
+                $sqlQueryController->executeQuery($query, $array, 'execute');
                 
-                /**
-                * Create the message
-                */
-                $swift->createMessage($randomPassword, $credentials['email']);
-                
-                /**
-                * Return the newly created message
-                */
+                $swift->createMessage($randomPassword, $credentials['email']);  
+
                 $message = $swift->getMessage();
                 
-                /**
-                * Send the message
-                */
                 if($swift->sendMessage($message)){
                     echo '<p>Check your inbox for the new password. Your old password will no longer work</p>';
                 }

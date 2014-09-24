@@ -1,7 +1,4 @@
 <?php
-/**
-* Handles the password change
-*/
 
 class ChangePassword{
 
@@ -14,12 +11,7 @@ class ChangePassword{
         require_once 'SqlQueryController.php';
         
         if(isset($_POST['resetPassword'])){
-            /**
-            * @param associative array
-            * stripAllWhiteSpaces will remove ALL white spaces.
-            * example: $stringBefore = ' this is an example';
-            *          $stringAfter  = 'thisisanexample';
-            */
+        
             $credentials = ValidateData::stripAllWhiteSpaces(array('passwordCurrent' => $_POST['passwordCurrent'],
                                                                    'passwordNew'     => $_POST['passwordNew'],
                                                                    'passwordNewAgain'=> $_POST['passwordNewAgain']
@@ -30,10 +22,7 @@ class ChangePassword{
     }
 
     public function doResetPassword($credentials){
-        /**
-        * @bool
-        * Loops thru the array if a value is empty returns true
-        */
+    
         if(ValidateData::isEmpty($credentials)){
         
             $_errors[] = '<p>Some fields are empty</p>';  
@@ -80,14 +69,14 @@ class ChangePassword{
         
         $sqlQueryController = new SqlQueryController();
         
-        $query = "UPDATE login_table
+        $query = "UPDATE users_table
                  SET login_password=:passwordNew 
                  WHERE login_id=:usernameId";
                                           
         $array = array(':passwordNew' => $hashedPassword,
                        ':usernameId'  => $usernameId);
 
-        if($sqlQueryController->runQueryExecute($query, $array)){
+        if($sqlQueryController->executeQuery($query, $array, 'execute')){
             echo '<p>Successfully changed the password</p>';
         } else {
             echo '<p>An error occurred while changing the password</p>';
