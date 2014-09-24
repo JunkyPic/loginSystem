@@ -1,10 +1,6 @@
 Login System
 ===========
 
-A simple PHP login system using Sessions
-
-This README contains a lot more things than it should. I will SOON modify it.
-
 Requirements
 ===========
  - PHP 5.3.7+
@@ -14,10 +10,8 @@ Requirements
 
 Installation
 ===========
- - Access a MySql terminal. Copy+paste the stuff in create_db.php file and hit enter.
- - Next comes the create_tables.php file located in the same folder.
- -  A more user-friendly interface to create the database and tables will come SOON.
- - Configure the ConnectionFactory.php, with your database credentials, located in the /db folder.
+ - Use the queries in the _installation folder to create the database and tables
+ - Configure the ConnectionFactory.php, with your database credentials, located in the db/ folder.
  - Configure the SendMailRecoverPassword.php file with your SMTP credentials.
   - NOTE: If the files are not configured, the errors thrown are user friendly. Useful errors are logged in the logFiles folder.
  - Change the date_default_timezone_set() in the WriteToLog.php, located in the classes folder, to your default time zone.
