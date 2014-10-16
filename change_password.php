@@ -2,8 +2,8 @@
 session_start();
 
 if(isset($_SESSION['id'])){
-	include 'views/change_password_form.php';
-	require_once 'classes/ChangePassword.php';
+    include 'views/change_password_form.php';
+    require_once 'classes/ChangePassword.php';
     require_once 'classes/ValidateCredentials.php';
     
     if(isset($_POST['resetPassword'])){
