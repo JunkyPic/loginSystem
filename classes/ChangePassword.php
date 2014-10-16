@@ -38,7 +38,4 @@ class ChangePassword{
 		$_SESSION = array();
 		session_destroy();
     }
-    
-
-
 }
