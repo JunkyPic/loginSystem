@@ -1,14 +1,16 @@
 <?php
 
+require_once realpath(dirname(__FILE__) . '/..') . '/db/DbFactory.php';
+
 class SqlQueryController{
     
-    private $_MySqlSingleton = NULL;
+    private $conn = NULL;
     
     public function __construct(){
-        require_once realpath(dirname(__FILE__) . '/..') . '/db/MySqlSingleton.php';
         
-        if($this->_MySqlSingleton == NULL){
-            $this->_MySqlSingleton = MySqlSingleton::getInstance();
+        if($this->conn == NULL){
+            $this->conn = DbFactory::getNew('MySQL');
+            $this->conn = $this->conn->getInstance();
         }
     }
     /**
@@ -18,12 +20,12 @@ class SqlQueryController{
     
         switch ($method){
             case 'fetch':
-                $sqlQuery = $this->_MySqlSingleton->prepare($query);
+                $sqlQuery = $this->conn->prepare($query);
                 $sqlQuery->execute($array);
                 return $sqlQuery->fetch();
                 
             case 'fetchAssoc':
-                $sqlQuery = $this->_MySqlSingleton->prepare($query);
+                $sqlQuery = $this->conn->prepare($query);
                 $sqlQuery->execute($array);
                 $sqlQuery = $sqlQuery->fetch(PDO::FETCH_ASSOC);
                 return $sqlQuery;
@@ -39,7 +41,7 @@ class SqlQueryController{
                 return $sqlQuery;
                 
             case 'execute':
-                $sqlQuery = $this->_MySqlSingleton->prepare($query);
+                $sqlQuery = $this->conn->prepare($query);
                 if($array == NULL){
                     $sqlQuery->execute();
                     return $sqlQuery;
