@@ -8,7 +8,7 @@ if(isset($_SESSION['id'])){
     
     if(isset($_POST['resetPassword'])){
 
-        $credentials = (array('passwordCurrent' => $_POST['passwordCurrent'],
+        $credentials = (array('passwordCurrent'  => $_POST['passwordCurrent'],
                                'passwordNew'     => $_POST['passwordNew'],
                                'passwordNewAgain'=> $_POST['passwordNewAgain']
                               )
