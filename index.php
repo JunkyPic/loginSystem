@@ -4,8 +4,22 @@ session_start();
 * Author: Andrei Popa
 * link: https://github.com/JunkyPic/loginSystem/tree/Test
 */
-require_once 'classes/Login.php';
-$login = new Login();
+require_once 'classes\ValidateCredentials.php';
+require_once 'classes\Login.php';
+
+if(isset($_POST['login'])){
+    $credentials = (array('username' => $_POST['username'], 
+                          'password' => $_POST['password']
+                         )
+                   );
+    $validateLogin = new ValidateCredentials($credentials, 'login');
+    
+    $credentials = $validateLogin->doValidate();
+    
+    $login = new Login($credentials);
+}
+
+
 
 if ((isset($_SESSION['id'])) && (isset($_SESSION['username']))){
     header('Location: logged_in.php');
