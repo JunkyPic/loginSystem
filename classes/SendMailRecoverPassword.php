@@ -12,19 +12,19 @@
 
 class SendMailRecoverPassword
 {
-    private $_message;
+    private $message;
 
-    private $_transport;
-    private $_SMTP = 'localhost';
-    private $_port = 25;
-    private $_mailer;
+    private $transport;
+    private $SMTP = 'localhost';
+    private $port = 25;
+    private $mailer;
     
     public function __construct(){
 
         require_once  realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once 'WriteToLog.php';
        
-        $this->_transport = Swift_SmtpTransport::newInstance($this->_SMTP, $this->_port);
+        $this->_transport = Swift_SmtpTransport::newInstance($this->SMTP, $this->port);
         
         /**
         * Check the trasport here if it doesn't work
@@ -36,7 +36,7 @@ class SendMailRecoverPassword
         * Creates a new instance of Swift_Message
         * and assigns it to the $_message variable
         */
-        $this->_mailer = Swift_Mailer::newInstance($this->_transport);
+        $this->_mailer = Swift_Mailer::newInstance($this->transport);
         $this->_message = Swift_Message::newInstance();
 
     }
@@ -62,13 +62,13 @@ It is highly recommended that you do not leave this password as your default pas
     
     }
     public function getMessage(){
-        return $this->_message;
+        return $this->message;
     }
     
     
     public function checkTransport(){
         try{
-            $this->_transport->start();
+            $this->transport->start();
         } catch (Swift_TransportException $e){
             //User friendly _message
             echo '<p>Unable to send recovery email.</p>';
@@ -84,7 +84,7 @@ It is highly recommended that you do not leave this password as your default pas
     
     public function sendMessage($_message){
         try{
-            $this->_mailer->send($_message);
+            $this->mailer->send($_message);
             }
         catch (Swift_TransportException $e){
             //User friendly _message
