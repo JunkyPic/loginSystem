@@ -19,9 +19,4 @@ That's about it.
 
 ----
 
-A few things to note and some TODOs:
    - SOON - Trademark - See this link for clarification - http://www.wowwiki.com/Soon
-   - TODO: Split up classes. As it stands they are too bloated with functions. One class does way more than it needs to.
-My Responsability Separation is not good at all.
-   - TODO: Implement a repository pattern(and probably other stuff) - tutorial [here](http://code.tutsplus.com/tutorials/the-repository-design-pattern--net-35804)
-   - TODO: Rewrite CSS. It's all manner of wrong.
