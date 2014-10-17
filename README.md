@@ -16,7 +16,3 @@ Installation
   - NOTE: This is more of an Optional thing. Currently the timezone is GMT +2. If you're ok with that, you can leave it as default. It won't affect the logging of errors at all.
 
 That's about it.
-
-----
-
-   - SOON - Trademark - See this link for clarification - http://www.wowwiki.com/Soon
