@@ -4,15 +4,15 @@ require_once realpath(dirname(__FILE__) . '/..') . '/db/DbFactory.php';
 
 class SqlQueryController{
     
-    private $conn = NULL;
+    private $conn;
     
     public function __construct(){
         
-        if($this->conn == NULL){
-            $this->conn = DbFactory::getNew('MySQL');
-            $this->conn = $this->conn->getInstance();
-        }
+        $this->conn = DbFactory::getNew('MySQL');
+        $this->conn = $this->conn->getInstance();
+        
     }
+    
     /**
     * Returns the execute query based on the $method
     */

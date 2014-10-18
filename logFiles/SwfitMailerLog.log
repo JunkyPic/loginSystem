@@ -1,1 +1,7 @@
 [18-09-2014 21:18:48]: Error: Connection could not be established with host mail.stats.rdonohue.ca [php_network_getaddresses: getaddrinfo failed: Name or service not known #0]
+[16-10-2014 00:49:43]: Error: Connection could not be established with host localhost [No connection could be made because the target machine actively refused it.
+ #10061]
+[16-10-2014 00:51:11]: Error: Connection could not be established with host localhost [No connection could be made because the target machine actively refused it.
+ #10061]
+[16-10-2014 00:56:15]: Error: Connection could not be established with host localhost [No connection could be made because the target machine actively refused it.
+ #10061]

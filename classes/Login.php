@@ -1,19 +1,21 @@
 <?php
 
 class Login{
+    private $credentials;
     
     public function __construct($credentials){
-
+        $this->credentials = $credentials; 
+    }
+    
+    public function doLogin($credentials){
         require_once 'PasswordHash.php';
         require_once 'SqlQueryController.php';
         require_once 'ValidateData.php';
         
-        $this->doLogin($credentials);
+        if($this->credentials == FALSE){
+            return;
+        }
         
-    }
-    
-    public function doLogin($credentials){
-    
         $passwordHash = new PasswordHash();
         
         $sqlQueryController = new SqlQueryController();
@@ -23,22 +25,22 @@ class Login{
                   WHERE login_username=:username 
                   LIMIT 1";
                       
-        $array = array(':username' => $credentials['username']);
+        $array = array(':username' => $this->credentials['username']);
 
         $hash = $sqlQueryController->executeQuery($query, $array, 'fetch');
 
 
-        $passwordVerify = $passwordHash->verifyPassword($credentials['password'], $hash['login_password']);
+        $passwordVerify = $passwordHash->verifyPassword($this->credentials['password'], $hash['login_password']);
         
         $query = "SELECT login_username, login_id
                   FROM users_table
                   WHERE login_username=:username LIMIT 1";
                              
-        $array = array(':username' => $credentials['username']);
+        $array = array(':username' => $this->credentials['username']);
         
         $userVerify = $sqlQueryController->executeQuery($query, $array, 'fetch');
 
-        if(($passwordVerify == 1) && ($userVerify['login_username'] == $credentials['username'])){
+        if(($passwordVerify == 1) && ($userVerify['login_username'] == $this->credentials['username'])){
             
             $_SESSION['id']       = $userVerify['login_id'];
             $_SESSION['username'] = $userVerify['login_username'];

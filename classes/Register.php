@@ -1,7 +1,6 @@
 <?php
 
 class Register{
-    private $_errors = array();
     private $credentials;
     
     public function __construct($credentials){

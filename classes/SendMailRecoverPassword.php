@@ -13,7 +13,6 @@
 class SendMailRecoverPassword
 {
     private $message;
-
     private $transport;
     private $SMTP = 'localhost';
     private $port = 25;
@@ -24,7 +23,7 @@ class SendMailRecoverPassword
         require_once  realpath(dirname(__FILE__) . '/..') . '/swiftmailer/lib/swift_required.php';
         require_once 'WriteToLog.php';
        
-        $this->_transport = Swift_SmtpTransport::newInstance($this->SMTP, $this->port);
+        $this->transport = Swift_SmtpTransport::newInstance($this->SMTP, $this->port);
         
         /**
         * Check the trasport here if it doesn't work
@@ -36,8 +35,8 @@ class SendMailRecoverPassword
         * Creates a new instance of Swift_Message
         * and assigns it to the $_message variable
         */
-        $this->_mailer = Swift_Mailer::newInstance($this->transport);
-        $this->_message = Swift_Message::newInstance();
+        $this->mailer = Swift_Mailer::newInstance($this->transport);
+        $this->message = Swift_Message::newInstance();
 
     }
     

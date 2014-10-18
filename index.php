@@ -14,9 +14,10 @@ if(isset($_POST['login'])){
                    );
     $validateLogin = new ValidateCredentials($credentials, 'login');
     
-    $credentials = $validateLogin->doValidate();
-    
-    $login = new Login($credentials);
+    if($credentials = $validateLogin->doValidate()){
+        $login = new Login($credentials);
+        $login->doLogin();
+    }
 }
 
 

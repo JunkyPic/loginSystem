@@ -9,7 +9,7 @@ if(isset($_POST['register'])){
                            'password'      => $_POST['password'],
                            'passwordAgain' => $_POST['passwordAgain'],
                            'email'         => $_POST['email']
-                            )
+                         )
                     );
                                                     
     $validateRegister = new ValidateCredentials($credentials, 'register');
@@ -21,4 +21,3 @@ if(isset($_POST['register'])){
         $register->doRegister();
     }
 }
-

@@ -17,11 +17,11 @@ class ChangePassword{
         
         $passwordHash = new PasswordHash();
         
+        $sqlQueryController = new SqlQueryController();
+        
         $hashedPassword = $passwordHash->hashPassword($this->credentials['passwordNew']);
 
         $usernameId = $_SESSION['id'];
-        
-        $sqlQueryController = new SqlQueryController();
         
         $query = "UPDATE users_table
                  SET login_password=:passwordNew 
@@ -38,4 +38,7 @@ class ChangePassword{
 		$_SESSION = array();
 		session_destroy();
     }
+    
+
+
 }
