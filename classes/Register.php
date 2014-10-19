@@ -4,16 +4,15 @@ class Register{
     private $credentials;
     
     public function __construct($credentials){
-	
-        require_once 'SqlQueryController.php';
-        require_once 'PasswordHash.php';
-        require_once 'ValidateData.php';
-
         $this->credentials = $credentials;
     }
     
     public function doRegister(){
-       
+        
+        require_once 'SqlQueryController.php';
+        require_once 'PasswordHash.php';
+        require_once 'ValidateData.php';
+        
         $passwordHash = new PasswordHash();
         
         $this->credentials['passwordHashed'] = $passwordHash->hashPassword($this->credentials['password']);

@@ -7,13 +7,14 @@ class ChangePassword{
     
     public function __construct($credentials){
     
-        require_once 'PasswordHash.php';
-        require_once 'SqlQueryController.php';
+
         
         $this->credentials = $credentials;
     }
 
     public function doResetPassword(){
+        require_once 'PasswordHash.php';
+        require_once 'SqlQueryController.php';
         
         $passwordHash = new PasswordHash();
         

@@ -8,6 +8,7 @@ class Login{
     }
     
     public function doLogin($credentials){
+        
         require_once 'PasswordHash.php';
         require_once 'SqlQueryController.php';
         require_once 'ValidateData.php';

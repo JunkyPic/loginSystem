@@ -5,18 +5,17 @@ class RecoverPassword{
     private $credentials;
     
     public function __construct($credentials){
-    
-        require_once 'PasswordHash.php';
-        require_once 'SendMailRecoverPassword.php';
-        require_once 'ValidateData.php';
-        require_once 'SqlQueryController.php';
         
         $this->credentials = $credentials;
         
     }
     
     public function doRecoverPassword(){
-
+        require_once 'PasswordHash.php';
+        require_once 'SendMailRecoverPassword.php';
+        require_once 'ValidateData.php';
+        require_once 'SqlQueryController.php';
+        
         $sqlQueryController = new SqlQueryController();
         
         $query = "SELECT login_email
