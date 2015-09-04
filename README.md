@@ -1,6 +1,11 @@
 Login System
 ===========
 
+DO NOT USE THIS. REALLY. IT WAS MADE FOR PRACTICE A REALLY LONG TIME AGO.
+
+==========
+ 
+
 Requirements
 ===========
  - PHP 5.3.7+
